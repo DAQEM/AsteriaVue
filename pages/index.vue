@@ -44,6 +44,7 @@
                 size="md"
                 class="mt-8"
                 :color="player ? 'blue' : 'indigo'"
+                href="/projects"
               >
                 Explore Projects
               </Button>
@@ -55,13 +56,13 @@
             <img
               src="~/assets/images/minecraft_art/floating_island_artwork_1.png"
               alt=""
-              class="w-[32rem]"
+              class="h-[32rem]"
               v-if="player"
             />
             <img
               src="~/assets/images/minecraft_art/floating_island_artwork_2.png"
               alt=""
-              class="w-[32rem]"
+              class="h-[32rem]"
               v-else
             />
           </Transition>

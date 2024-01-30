@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mt-8 md:mt-16">
+  <div class="w-full mt-8 md:mt-16 bg-secondary-900">
     <hr class="border-secondary-800" />
     <div
       class="grid md:grid-flow-col md:auto-cols-fr max-w-7xl mx-auto py-8 w-full gap-4 px-4 md:px-0"

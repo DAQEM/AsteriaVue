@@ -1,10 +1,31 @@
 <template>
+  <a
+    v-if="href"
+    :href="href"
+    :class="[
+      'w-max',
+      'btn',
+      `btn-${size}`,
+      `btn-${color}`,
+      { 'btn-disabled': disabled, 'btn-loading': loading },
+      { 'rounded-full': rounded, 'rounded-xl': !rounded },
+    ]"
+    :target="newTab ? '_blank' : '_self'"
+    :rel="newTab ? 'noopener noreferrer' : ''"
+    :disabled="disabled || loading"
+  >
+    <slot v-if="!loading"></slot>
+    <span v-if="loading">Loading...</span>
+  </a>
+
   <button
+    v-else
     :class="[
       'btn',
       `btn-${size}`,
       `btn-${color}`,
       { 'btn-disabled': disabled, 'btn-loading': loading },
+      { 'rounded-full': rounded, 'rounded-xl': !rounded },
     ]"
     :disabled="disabled || loading"
   >
@@ -33,6 +54,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    rounded: {
+      type: Boolean,
+      default: true,
+    },
+    href: {
+      type: String,
+      default: null,
+    },
+    newTab: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -43,7 +76,6 @@ export default {
   @apply flex items-center justify-center;
   @apply transition-all duration-300 ease-in-out;
   @apply bg-gradient-to-r;
-  @apply rounded-full;
 }
 
 .btn-blue {

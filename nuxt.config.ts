@@ -1,12 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
-  modules: ["nuxt-icon", "@nuxt/image"],
+  modules: ["nuxt-icon", "@vueuse/nuxt"],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  runtimeConfig: {
+    hestiaUrl: process.env.HESTIA_URL ?? "http://localhost:5000",
+    asteriaUrl: process.env.ASTERIA_URL ?? "http://localhost:3000",
   },
 });
