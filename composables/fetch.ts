@@ -11,12 +11,15 @@ export const useFetchHestia = (url: string, options: HttpOptions) => {
 };
 
 export const useBaseFetch = (url: string, options: HttpOptions) => {
+  console.log("Fetching:", url, options);
   return fetch(url, {
     method: options.method ?? HttpMethod.GET,
     headers: {
       "Content-Type": options.headers?.["Content-Type"] ?? ContentType.JSON,
-      Authorization: options.headers?.Authorization ?? "",
+      Authorization:
+        options.headers?.Authorization ?? getAuthCookie().value ?? "none",
     },
+    body: options.body,
   });
 };
 
@@ -37,4 +40,5 @@ export type HttpOptions = {
     "Content-Type"?: ContentType;
     Authorization?: string | null | undefined;
   };
+  body?: string;
 };

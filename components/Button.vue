@@ -74,7 +74,7 @@ export default {
 .btn {
   @apply font-semibold;
   @apply flex items-center justify-center;
-  @apply transition-all duration-300 ease-in-out;
+  @apply transition-all duration-200 ease-in-out;
   @apply bg-gradient-to-r;
 }
 
@@ -94,12 +94,20 @@ export default {
   @apply text-white from-indigo-800 to-indigo-700;
 }
 
+.btn-gray {
+  @apply text-white bg-background-600;
+}
+
+.btn-gray:hover {
+  @apply text-white bg-background-700;
+}
+
 .btn-sm {
   @apply px-2 py-1;
   @apply text-xs;
 
-  @apply md:text-lg;
-  @apply md:px-3 md:py-1;
+  @apply md:text-base;
+  @apply md:px-4 md:py-2;
 }
 
 .btn-md {
@@ -114,7 +122,7 @@ export default {
   @apply px-6 py-3;
   @apply text-base;
 
-  @apply md:text-lg;
+  @apply md:text-xl;
   @apply md:px-8 md:py-4;
 }
 </style>

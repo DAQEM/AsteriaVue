@@ -6,7 +6,7 @@
     <div
       v-if="isOpen"
       id="dropdown-options"
-      class="mt-2 absolute left-1/2 rounded-md shadow-lg bg-secondary-800 z-10 -translate-x-1/2"
+      class="mt-2 absolute left-1/2 rounded-md shadow-lg bg-background-800 z-10 -translate-x-1/2"
     >
       <slot name="options" />
     </div>

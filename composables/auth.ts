@@ -1,3 +1,4 @@
+import { setAuthCookie } from "./cookie";
 import { getHestiaUrl } from "./url";
 
 export const getAuth = async () => {
@@ -32,18 +33,29 @@ export const getLoginUrl = (provider: string, returnUrl: string): string => {
 
 export const getLogoutUrl = (returnUrl: string): string => {
   return `${getBaseAuthenticationUrl()}/logout?returnUrl=${returnUrl}`;
-}
+};
 
 export const getMe = async (): Promise<User | null> => {
   const cookie = getAuthCookie().value;
-  const response = await useFetchAuthentication("/me", {
-    method: HttpMethod.GET,   
+  if (!cookie) return null;
+  let response = await useFetchAuthentication("/me", {
+    method: HttpMethod.GET,
     headers: {
       Authorization: cookie,
     },
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      await refreshToken(cookie);
+
+      response = await useFetchAuthentication("/me", {
+        method: HttpMethod.GET,
+        headers: {
+          Authorization: cookie,
+        },
+      });
+    }
     return null;
   }
 
@@ -51,3 +63,22 @@ export const getMe = async (): Promise<User | null> => {
 
   return data;
 };
+
+export const refreshToken = async (oldToken: string): Promise<boolean> => {
+  const response = await useFetchAuthentication("/refresh", {
+    method: HttpMethod.POST,
+    headers: {
+      Authorization: oldToken,
+    },
+  });
+
+  if (!response.ok) {
+    return false;
+  }
+
+  const data = await response.json();
+
+  setAuthCookie(data.token);
+
+  return true;
+}

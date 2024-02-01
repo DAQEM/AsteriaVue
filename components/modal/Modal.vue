@@ -10,7 +10,7 @@
       class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
       <div
-        class="fixed inset-0 bg-secondary-950 bg-opacity-65 transition-opacity"
+        class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
         aria-hidden="true"
       />
       <span

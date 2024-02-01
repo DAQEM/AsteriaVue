@@ -1,6 +1,6 @@
 <template>
   <Modal :showModal="showModal" @closeModal="closeModal">
-    <div class="bg-secondary-900 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+    <div class="bg-background-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
       <div class="sm:flex sm:items-start">
         <div class="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
           <div class="w-full flex justify-between">

@@ -7,6 +7,11 @@ export const getPlayerCookie = (): ComputedRef<string | null | undefined> => {
 };
 
 export const getAuthCookie = (): ComputedRef<string | null | undefined> => {
-  const cookie = useCookie(".AspNetCore.Cookies");
+  const cookie = useCookie("hestia-auth-token");
   return computed(() => cookie.value ?? undefined);
+};
+
+export const setAuthCookie = (token: string) => {
+  const cookie = useCookie("hestia-auth-token");
+  cookie.value = token;
 };

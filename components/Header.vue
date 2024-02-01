@@ -1,5 +1,5 @@
 <template>
-  <nav class="sticky top-0 left-0 bg-secondary-900">
+  <nav class="sticky top-0 left-0 bg-background">
     <LoginModal :showModal="showModal" @closeModal="closeModal" />
     <div class="max-w-8xl mx-auto h-24 grid grid-cols-3-mid items-center px-4">
       <a href="/">
@@ -16,7 +16,7 @@
       <!-- Mobile Menu -->
       <div
         v-show="mobileMenuOpen"
-        class="lg:hidden fixed inset-0 bg-secondary-900 z-30"
+        class="lg:hidden fixed inset-0 bg-background z-30"
       >
         <button
           class="absolute top-8 right-8 text-white focus:outline-none"
@@ -30,35 +30,35 @@
           <li>
             <p>Menu</p>
           </li>
-          <li class="bg-secondary-700 rounded-full p-2 text-center">
+          <li class="bg-background-800 rounded-full p-2 text-center">
             <NuxtLink @click="closeMobileMenu" to="/projects"
               >Projects</NuxtLink
             >
           </li>
-          <li class="bg-secondary-700 rounded-full p-2 text-center">
+          <li class="bg-background-800 rounded-full p-2 text-center">
             <NuxtLink @click="closeMobileMenu" to="/blog">Blog</NuxtLink>
           </li>
-          <li class="bg-secondary-700 rounded-full p-2 text-center">
+          <li class="bg-background-800 rounded-full p-2 text-center">
             <NuxtLink @click="closeMobileMenu" to="/support">Support</NuxtLink>
           </li>
-          <li class="bg-secondary-700 rounded-full p-2 text-center">
+          <li class="bg-background-800 rounded-full p-2 text-center">
             <NuxtLink @click="closeMobileMenu" to="/servers">Servers</NuxtLink>
           </li>
           <li class="mt-4">
             <p>User</p>
           </li>
           <template v-if="user">
-            <li class="bg-secondary-700 rounded-full p-2 text-center">
-              <NuxtLink @click="closeMobileMenu" :to="'/user/' + user.username">
+            <li class="bg-background-800 rounded-full p-2 text-center">
+              <NuxtLink @click="closeMobileMenu" :to="'/user/' + user.name">
                 Profile
               </NuxtLink>
             </li>
-            <li class="bg-secondary-700 rounded-full p-2 text-center">
-              <NuxtLink @click="closeMobileMenu" to="/account">
+            <li class="bg-background-800 rounded-full p-2 text-center">
+              <NuxtLink @click="closeMobileMenu" to="/settings/account">
                 Settings
               </NuxtLink>
             </li>
-            <li class="bg-secondary-700 rounded-full p-2 text-center">
+            <li class="bg-background-800 rounded-full p-2 text-center">
               <NuxtLink
                 @click="closeMobileMenu"
                 :to="getLogoutUrl(getAsteriaUrl() + route.fullPath)"
@@ -68,7 +68,7 @@
             </li>
           </template>
           <template v-else>
-            <li class="bg-secondary-700 rounded-full p-2 text-center">
+            <li class="bg-background-800 rounded-full p-2 text-center">
               <NuxtLink
                 :color="player ? 'blue' : 'indigo'"
                 class="!text-lg !w-full"
@@ -137,39 +137,38 @@
                   :color="player ? 'blue' : 'indigo'"
                   class="h-12 !p-[.25rem]"
                 >
-                  <img
-                    :src="user.image"
+                  <ProfileImage
+                    :image="user.image"
                     class="rounded-full h-10 w-10"
-                    alt="User Avatar"
                   />
                 </Button>
               </template>
               <template #options>
                 <div class="p-4 w-56">
                   <p class="text-white font-bold">
-                    {{ user.username }}
+                    {{ user.name }}
                   </p>
                   <p class="text-white truncate">{{ user.email }}</p>
                 </div>
-                <hr class="border-secondary-700" />
+                <hr class="border-background-800" />
                 <div class="pb-2">
                   <NuxtLink
-                    to="/account"
-                    class="block px-4 py-2 text-white hover:bg-secondary-700"
+                    :to="'/user/' + user.name"
+                    class="block px-4 py-2 text-white hover:bg-background-700"
                   >
                     <Icon name="fa6-solid:user" class="h-4 w-4 mr-2" />
                     Profile
                   </NuxtLink>
                   <NuxtLink
-                    to="/account"
-                    class="block px-4 py-2 text-white hover:bg-secondary-700"
+                    to="/settings/account/"
+                    class="block px-4 py-2 text-white hover:bg-background-700"
                   >
                     <Icon name="fa6-solid:gear" class="h-4 w-4 mr-2" />
                     Settings
                   </NuxtLink>
                   <NuxtLink
                     :to="getLogoutUrl(getAsteriaUrl() + route.fullPath)"
-                    class="block px-4 py-2 text-white hover:bg-secondary-700"
+                    class="block px-4 py-2 text-white hover:bg-background-700"
                   >
                     <Icon
                       name="fa6-solid:arrow-right-from-bracket"
