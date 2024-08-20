@@ -1,5 +1,5 @@
 <template>
-  <nav class="sticky top-0 left-0 bg-background">
+  <nav class="sticky top-0 left-0 bg-background z-50">
     <LoginModal :showModal="showModal" @closeModal="closeModal" />
     <div class="max-w-8xl mx-auto h-24 grid grid-cols-3-mid items-center px-4">
       <a href="/">
@@ -154,14 +154,14 @@
                 <div class="pb-2">
                   <NuxtLink
                     :to="'/user/' + user.name"
-                    class="block px-4 py-2 text-white hover:bg-background-700"
+                    class="block px-4 py-2 text-white hover:bg-background-700 !border-0"
                   >
                     <Icon name="fa6-solid:user" class="h-4 w-4 mr-2" />
                     Profile
                   </NuxtLink>
                   <NuxtLink
                     to="/settings/account/"
-                    class="block px-4 py-2 text-white hover:bg-background-700"
+                    class="block px-4 py-2 text-white hover:bg-background-700 !border-0"
                   >
                     <Icon name="fa6-solid:gear" class="h-4 w-4 mr-2" />
                     Settings
@@ -242,4 +242,8 @@ const closeModal = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.router-link-active {
+  @apply border-b-4 border-blue-600 pb-1;
+}
+</style>

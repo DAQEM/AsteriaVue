@@ -34,16 +34,16 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "Button",
   props: {
     color: {
-      type: String,
+      type: String as () => "blue" | "indigo" | "gray",
       default: "blue",
     },
     size: {
-      type: String,
+      type: String as () => "md" | "lg",
       default: "md",
     },
     disabled: {
@@ -100,14 +100,6 @@ export default {
 
 .btn-gray:hover {
   @apply text-white bg-background-700;
-}
-
-.btn-sm {
-  @apply px-2 py-1;
-  @apply text-xs;
-
-  @apply md:text-base;
-  @apply md:px-4 md:py-2;
 }
 
 .btn-md {

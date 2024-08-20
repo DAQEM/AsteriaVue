@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    "node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx,vue}",
+    "node_modules/flowbite/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,vue,ts}",
     "./layouts/**/*.vue",
     "./pages/**/*.vue",
@@ -8,6 +10,7 @@ export default {
     "./app.vue",
     "./error.vue",
   ],
+  plugins: [require("flowbite/plugin")],
   theme: {
     extend: {
       maxWidth: {
@@ -54,5 +57,4 @@ export default {
       },
     },
   },
-  plugins: [],
 };

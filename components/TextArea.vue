@@ -1,47 +1,75 @@
 <template>
-  <label v-if="showLabel" class="text-lg font-bold capitalize" :for="name">
-    {{ name }}
-  </label>
-  <textarea
-    :value="value"
-    @input="$emit('update:value', ($event.target as HTMLTextAreaElement).value)"
-    :name="name"
+  <fwb-textarea
+    :modelValue="modelValue"
+    @input="updateValue"
+    :label="label"
+    :placeholder="placeholder"
     :type="type"
-    class="w-full bg-background-700 rounded-xl p-4 mt-1"
-    :class="{ 'resize-none': !resizable }"
-  />
+    :size="size"
+    :rows="rows"
+    class="x_textarea"
+  >
+    <template #prefix v-if="icon">
+      <Icon :name="icon" />
+    </template>
+  </fwb-textarea>
 </template>
 
 <script lang="ts">
+import { FwbTextarea } from "flowbite-vue";
+
 export default {
   name: "Input",
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: "",
     },
-    name: {
+    label: {
       type: String,
       default: "",
     },
     type: {
-      type: String,
+      type: String as () => "text" | "password" | "email",
       default: "text",
     },
-    showLabel: {
-      type: Boolean,
-      default: true,
+    size: {
+      type: String as () => "sm" | "md" | "lg",
+      default: "md",
     },
-    resizable: {
-      type: Boolean,
-      default: true,
+    placeholder: {
+      type: String,
+      default: "",
     },
+    icon: {
+      type: String,
+      default: "",
+    },
+    rows: {
+      type: Number,
+      default: 3,
+    },
+  },
+  methods: {
+    updateValue(event: Event) {
+      this.$emit(
+        "update:modelValue",
+        (event.target as HTMLSelectElement).value
+      );
+    },
+  },
+  components: {
+    FwbTextarea,
   },
 };
 </script>
 
-<style scoped>
-textarea:focus {
-  @apply outline-4 !outline-blue-600 outline-none;
+<style>
+.x_textarea textarea {
+  @apply !bg-background-700 !border-none !text-white focus:!ring-4 !ring-blue-600 !font-normal;
+}
+
+.x_textarea label > span {
+  @apply !text-lg !font-bold !capitalize !text-white !mb-1;
 }
 </style>

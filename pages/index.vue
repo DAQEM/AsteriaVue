@@ -2,7 +2,7 @@
   <div class="absolute top-0 right-0 -z-10">
     <SvgCorner
       class="lg:w-[48rem] md:w-[32rem] sm:block hidden"
-      :class="player ? 'fill-blue-800' : 'fill-indigo-800'"
+      :class="player ? 'fill-blue-600' : 'fill-indigo-600'"
     />
   </div>
   <div class="mt-8 mb-16 md:mt-16 md:mb-32">

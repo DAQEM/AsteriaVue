@@ -1,7 +1,10 @@
 <template>
   <div class="max-w-8xl mx-auto mt-24">
-    <div class="grid lg:grid-cols-[320px,1fr,1fr] gap-6">
-      <div id="profile-info" class="bg-background-800 rounded-2xl relative">
+    <div class="grid lg:grid-cols-[320px,1fr] gap-6">
+      <div
+        id="profile-info"
+        class="bg-background-800 rounded-2xl relative h-min"
+      >
         <div v-if="isOwner" class="absolute right-4 top-4">
           <Button
             v-if="!editing"
@@ -9,7 +12,6 @@
             class="bg-primary-500 hover:bg-primary-600"
             :rounded="false"
             color="gray"
-            size="sm"
           >
             Edit
           </Button>
@@ -48,10 +50,15 @@
         </div>
         <div v-else class="flex flex-col justify-center p-4 gap-4">
           <div>
-            <Input :value="user.name" name="username" />
+            <Input
+              v-model="user.name"
+              name="username"
+              label="Username"
+              size="lg"
+            />
           </div>
           <div>
-            <TextArea :value="user.bio" name="bio" :resizable="false" />
+            <TextArea v-model="user.bio" name="bio" label="Bio" />
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -61,7 +68,6 @@
                 class="bg-primary-500 hover:bg-primary-600 !w-full"
                 :rounded="false"
                 color="gray"
-                size="sm"
               >
                 Cancel
               </Button>
@@ -74,7 +80,6 @@
                 class="bg-primary-500 hover:bg-primary-600 !w-full"
                 :rounded="false"
                 color="blue"
-                size="sm"
               >
                 Save
               </Button>
@@ -82,8 +87,103 @@
           </div>
         </div>
       </div>
-      <div id="activity"></div>
-      <div id="projects"></div>
+      <div class="bg-background-800 rounded-2xl">
+        <div id="selector">
+          <div
+            class="bg-background-700 rounded-xl m-4 py-4 px-8 font-semibold text-lg"
+          >
+            <div class="flex gap-4">
+              <div
+                @click="selectTab('activity')"
+                :class="{
+                  'text-gray-300': tab !== 'activity',
+                  'border-b-4 border-blue-600': tab === 'activity',
+                }"
+              >
+                Activity
+              </div>
+              <div
+                @click="selectTab('projects')"
+                :class="{
+                  'text-gray-300': tab !== 'projects',
+                  'border-b-4 border-blue-600': tab === 'projects',
+                }"
+              >
+                Projects
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-4">
+          <div id="activity" v-if="tab === 'activity'">
+            <div class="flex flex-col gap-4">
+              <div class="bg-background-700 rounded-xl py-4 px-8">
+                <h1>Comment on Jobs+</h1>
+                <div class="mt-2 grid grid-cols-[max-content,1fr] gap-4">
+                  <img
+                    :src="user.image"
+                    alt="Profile"
+                    class="h-12 w-12 rounded-full"
+                  />
+                  <div class="grid grid-rows-[max-content,max-content]">
+                    <h2 class="font-semibold">{{ user.name }}</h2>
+                    <p>
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Laborum eveniet ipsa fuga voluptates eos sapiente
+                      cupiditate, aperiam neque officiis ipsum nisi, qui
+                      doloribus! Eveniet magni saepe alias, quia enim maxime
+                      perspiciatis assumenda quod ea?
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-background-700 rounded-xl py-4 px-8">
+                <h1>Comment on Jobs+</h1>
+                <div class="mt-2 grid grid-cols-[max-content,1fr] gap-4">
+                  <img
+                    :src="user.image"
+                    alt="Profile"
+                    class="h-12 w-12 rounded-full"
+                  />
+                  <div class="grid grid-rows-[max-content,max-content]">
+                    <h2 class="font-semibold">{{ user.name }}</h2>
+                    <p>
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                      Et totam aliquam quo!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-background-700 rounded-xl py-4 px-8">
+                <h1>Comment on Jobs+</h1>
+                <div class="mt-2 grid grid-cols-[max-content,1fr] gap-4">
+                  <img
+                    :src="user.image"
+                    alt="Profile"
+                    class="h-12 w-12 rounded-full"
+                  />
+                  <div class="grid grid-rows-[max-content,max-content]">
+                    <h2 class="font-semibold">{{ user.name }}</h2>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Iusto doloribus nemo laborum quas similique voluptas
+                      temporibus, quae iure, eveniet enim suscipit aperiam quod.
+                      Aliquid minima consequuntur, sunt molestiae, rem animi
+                      quam, impedit pariatur eius optio esse ratione quibusdam
+                      consequatur accusamus eveniet officiis illum omnis odio!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="projects" v-else-if="tab === 'projects'">
+            <div>My Projects</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -93,6 +193,8 @@ import { useRoute } from "vue-router";
 import ProfileImage from "~/components/ProfileImage.vue";
 
 const route = useRoute();
+const router = useRouter();
+
 const name: string = route.params.name as string;
 
 const user: User | null = await getUser(name);
@@ -109,6 +211,7 @@ const auth = await getAuth();
 const isOwner = auth.value.user?.name === user?.name;
 const editing = ref(false);
 const saveButtonLoading = ref(false);
+const tab = ref(route.query.tab ?? "activity");
 
 async function submit() {
   const username = document.querySelector<HTMLInputElement>(
@@ -137,6 +240,11 @@ async function submit() {
     }
     window.location.href = `/user/${user.name}`;
   }
+}
+
+function selectTab(newTab: string) {
+  router.push(`/user/${name}?tab=${newTab}`);
+  tab.value = newTab;
 }
 
 function getTimeAgo(time: number): string {

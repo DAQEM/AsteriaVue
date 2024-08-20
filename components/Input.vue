@@ -1,42 +1,70 @@
 <template>
-  <label v-if="showLabel" class="text-lg font-bold capitalize" :for="name">
-    {{ name }}
-  </label>
-  <input
-    :value="value"
-    @input="$emit('update:value', ($event.target as HTMLInputElement).value)"
-    :name="name"
+  <fwb-input
+    :modelValue="modelValue"
+    @input="updateValue"
+    :label="label"
+    :placeholder="placeholder"
     :type="type"
-    class="w-full bg-background-700 rounded-xl p-4 mt-1"
-  />
+    :size="size"
+    class="x_input"
+  >
+    <template #prefix v-if="icon">
+      <Icon :name="icon" class="text-background-100" />
+    </template>
+  </fwb-input>
 </template>
 
 <script lang="ts">
+import { FwbInput } from "flowbite-vue";
+
 export default {
   name: "Input",
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: "",
     },
-    name: {
+    label: {
       type: String,
       default: "",
     },
     type: {
-      type: String,
+      type: String as () => "text" | "password" | "email",
       default: "text",
     },
-    showLabel: {
-      type: Boolean,
-      default: true,
+    size: {
+      type: String as () => "sm" | "md" | "lg",
+      default: "md",
     },
+    placeholder: {
+      type: String,
+      default: "",
+    },
+    icon: {
+      type: String,
+      default: "",
+    },
+  },
+  methods: {
+    updateValue(event: Event) {
+      this.$emit(
+        "update:modelValue",
+        (event.target as HTMLSelectElement).value
+      );
+    },
+  },
+  components: {
+    FwbInput,
   },
 };
 </script>
 
 <style>
-input:focus {
-  @apply outline-4 !outline-blue-600 outline-none;
+.x_input input {
+  @apply !bg-background-700 !border-none !text-background-100 focus:!text-white focus:!ring-4 !ring-blue-600 !font-medium !text-base;
+}
+
+.x_input label {
+  @apply !text-lg !font-bold !capitalize !text-white !mb-1;
 }
 </style>
